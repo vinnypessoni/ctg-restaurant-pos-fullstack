@@ -2,6 +2,7 @@ package com.restaurantpos.controller;
 
 import com.restaurantpos.model.Order;
 import com.restaurantpos.repository.OrderRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 @CrossOrigin(origins = "*")
+@Tag(name = "Order", description = "Order APIs")
 public class OrderController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);

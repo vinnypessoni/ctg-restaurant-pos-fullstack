@@ -2,6 +2,7 @@ package com.restaurantpos.controller;
 
 import com.restaurantpos.model.Table;
 import com.restaurantpos.repository.TableRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tables")
 @CrossOrigin(origins = "*")
+@Tag(name = "Table", description = "Table Item management APIs")
 public class TableController {
 
     private static final Logger logger = LoggerFactory.getLogger(TableController.class);

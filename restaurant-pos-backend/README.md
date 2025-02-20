@@ -26,4 +26,37 @@ OR Windows Systemas
 mvnw.cmd spring-boot:run
 ```
 
-You should see the API running in 
+You should see the API running in http://localhost:8080/
+
+
+### when you're actively developing and editing Java code, running with `docker compose up` isn't the most efficient approach. Here's why:
+
+1. The Docker image contains a snapshot of your code at build time
+2. Every code change requires rebuilding the Docker image to see the changes
+3. This process is slow and not suitable for development
+
+
+Instead, here are better approaches for development:
+
+Option 1 (Recommended for Development):
+Run the backend directly on your machine while developing:
+
+```shellscript
+cd backend
+./mvnw spring-boot:run
+```
+
+(For Windows: `mvnw.cmd spring-boot:run`)
+
+This way:
+
+- Changes are reflected quickly
+- Hot reload works
+- Faster development cycle
+- Easier debugging
+
+
+### SWAGGER available when you run the project
+
+* http://localhost:8080/swagger-ui.html
+* http://localhost:8080/v3/api-docs

@@ -2,6 +2,7 @@ package com.restaurantpos.controller;
 
 import com.restaurantpos.model.FoodItem;
 import com.restaurantpos.repository.FoodItemRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/food-items")
 @CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "Food Item", description = "Food Item management APIs")
 public class FoodItemController {
 
     private static final Logger logger = LoggerFactory.getLogger(FoodItemController.class);

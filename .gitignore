@@ -1,0 +1,14 @@
+# restaurant-pos-frontend
+restaurant-pos-frontend/node_modules
+restaurant-pos-frontend/.next
+restaurant-pos-frontend/.env*
+restaurant-pos-frontend/.DS_Store
+
+# restaurant-pos-backend
+restaurant-pos-backend/target
+restaurant-pos-backend/.env*
+restaurant-pos-backend/.DS_Store
+
+# General
+.DS_Store
+.idea/

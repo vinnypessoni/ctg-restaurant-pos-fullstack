@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./restaurant-pos-frontend
+      dockerfile: ../restaurant-pos-frontend.dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./restaurant-pos-backend
+      dockerfile: ../restaurant-pos-backend.dockerfile
+    ports:
+      - "8080:8080"

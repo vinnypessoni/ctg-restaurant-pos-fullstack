@@ -6,15 +6,15 @@ Thank you for downloading this project and welcome!
 
 This is a study project created for the students of the CTG mentorship program ran by Vinicius Pessoni (Vinny Pessoni @pessonizando)
 
-It simulates a software for restaurantes POS (point of services), 
+It simulates a software for restaurants. It is a POS (point of services), 
 like those they use to make your orders when you are in a table
 or the waiters would use to send your order to the kitchen.
 
 Its comprised of:
-* **frontend** done in typescript, react, nextjs. 
-* **backend** done in java and springboot
+* **frontend** - developed in typescript, react, nextjs. 
+* **backend** - developed in java and springboot (API)
 
-Feel free to clone, fork and use this for your studies!
+Feel free to clone, fork and use this for your studies =]
 
 ## What you will need and how to run
 
@@ -29,7 +29,7 @@ To run the entire stack, after cloning the project, simply go to the folder in t
 docker-compose up --build
 ```
 
-The api will be running in the port 8080 and acessible through
+The API will be running in the port 8080 and accessible through
 
 * http://localhost:8080/
 
@@ -46,11 +46,15 @@ When you hit you should see the app for the pos.
 Hope you have a great journey studying it!
 
 
-### Follow me where you prefer
+### Connect with me where you prefer
 
-😍 [YouTube]( https://www.youtube.com/c/pessonizando)
 
-💗 [Instagram](https://www.instagram.com/pessonizando)
+* [YouTube]( https://www.youtube.com/c/pessonizando)
 
-⭐ [Telegram](https://t.me/pessonizando)
+* [Instagram](https://www.instagram.com/pessonizando)
 
+* [Telegram](https://t.me/pessonizando)
+ 
+* [Discord](https://discord.gg/yWX8MsCEKe)
+ 
+* [CTG](https://ctg.viniciuspessoni.com)

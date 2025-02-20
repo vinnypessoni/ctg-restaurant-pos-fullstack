@@ -4,7 +4,7 @@ Hello there!
 
 Thank you for downloading this project and welcome!
 
-This is a study project created for the students of the CTG mentorship program ran by Vinicius Pessoni (Vinny Pessoni @pessonizando)
+This is a study project created for the students of the CTG mentorship program ran by Vinicius Pessoni Vinny Pessoni [@pessonizando](https://www.youtube.com/watch?v=NnamjfPYuiY&list=PLEqTHftpM91OQfx9XfmcXTjmypQTDB9qI)
 
 It simulates a software for restaurants. It is a POS (point of services), 
 like those they use to make your orders when you are in a table
@@ -58,3 +58,5 @@ Hope you have a great journey studying it!
 * [Discord](https://discord.gg/yWX8MsCEKe)
  
 * [CTG](https://ctg.viniciuspessoni.com)
+
+* [LinkedIn](https://www.linkedin.com/in/viniciuspessoni/) 

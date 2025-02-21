@@ -41,13 +41,16 @@ The frontend will be running in
     
 * http://localhost:3000/
 
-When you hit you should see the app for the pos. 
+When you hit the above link you should see the app for the POS. 
 
 Hope you have a great journey studying it!
 
+### SWAGGER (documentation for the API) available when you run the project
+
+* http://localhost:8080/swagger-ui.html
+* http://localhost:8080/v3/api-docs
 
 ### Connect with me where you prefer
-
 
 * [YouTube]( https://www.youtube.com/c/pessonizando)
 

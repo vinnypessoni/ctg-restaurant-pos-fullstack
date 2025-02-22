@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Loader2, DollarSign } from "lucide-react"
@@ -10,15 +11,33 @@ export default function AccountingPage() {
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
-    fetchOrders()
-  }, [])
+    const token = localStorage.getItem("token")
+    if (!token) {
+      router.push("/login")
+      return
+    }
 
-  const fetchOrders = async () => {
+    fetchOrders(token)
+  }, [router])
+
+  const fetchOrders = async (token: string) => {
     try {
-      const response = await fetch("http://localhost:8080/api/orders")
-      if (!response.ok) throw new Error("Failed to fetch orders")
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/accounting/orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem("token")
+          router.push("/login")
+          return
+        }
+        throw new Error("Failed to fetch orders")
+      }
       const data = await response.json()
       setOrders(data)
     } catch (error) {

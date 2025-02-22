@@ -9,6 +9,7 @@ import type { TableInfo } from "@/types"
 export default function ReservationPage() {
   const [tables, setTables] = useState<TableInfo[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [updating, setUpdating] = useState<number | null>(null)
 
   useEffect(() => {
@@ -17,12 +18,18 @@ export default function ReservationPage() {
 
   const fetchTables = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/tables")
-      if (!response.ok) throw new Error("Failed to fetch tables")
+      setLoading(true)
+      setError(null)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tables`)
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || "Failed to fetch tables")
+      }
       const data = await response.json()
       setTables(data)
     } catch (error) {
       console.error("Error fetching tables:", error)
+      setError("Failed to fetch tables. Please try again.")
     } finally {
       setLoading(false)
     }
@@ -31,7 +38,7 @@ export default function ReservationPage() {
   const handleReleaseTable = async (tableNumber: number) => {
     setUpdating(tableNumber)
     try {
-      const response = await fetch(`http://localhost:8080/api/tables/${tableNumber}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tables/${tableNumber}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +48,10 @@ export default function ReservationPage() {
         }),
       })
 
-      if (!response.ok) throw new Error("Failed to update table")
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || "Failed to update table")
+      }
 
       // Update local state
       setTables(
@@ -51,6 +61,7 @@ export default function ReservationPage() {
       )
     } catch (error) {
       console.error("Error releasing table:", error)
+      setError("Failed to release table. Please try again.")
     } finally {
       setUpdating(null)
     }
@@ -60,6 +71,15 @@ export default function ReservationPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <p className="text-red-500 mb-4">{error}</p>
+        <Button onClick={fetchTables}>Retry</Button>
       </div>
     )
   }

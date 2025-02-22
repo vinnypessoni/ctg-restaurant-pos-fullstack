@@ -1,8 +1,9 @@
 "use client"
 
-import { Menu, TableIcon as TableBar, CalendarRange, Truck, Calculator, Settings, LogOut } from "lucide-react"
+import { Menu, TableIcon as TableBar, CalendarRange, Truck, Calculator, Settings, LogOut, LogIn } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useRouter, usePathname } from "next/navigation"
+import { useState, useEffect } from "react"
 
 const navItems = [
   { icon: Menu, label: "Menu", color: "text-green-600", route: "/" },
@@ -16,9 +17,28 @@ const navItems = [
 export function SidebarNav() {
   const router = useRouter()
   const pathname = usePathname()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("token"))
+  }, [])
 
   const handleNavigation = (route: string) => {
-    router.push(route)
+    if (route === "/accounting" && !isLoggedIn) {
+      router.push("/login")
+    } else {
+      router.push(route)
+    }
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    setIsLoggedIn(false)
+    router.push("/")
+  }
+
+  const handleLogin = () => {
+    router.push("/login")
   }
 
   return (
@@ -44,10 +64,25 @@ export function SidebarNav() {
           </Button>
         ))}
       </nav>
-      <Button variant="ghost" className="w-full justify-start mt-auto text-gray-600 absolute bottom-4">
-        <LogOut className="mr-2 h-4 w-4" />
-        Logout
-      </Button>
+      {isLoggedIn ? (
+        <Button
+          variant="ghost"
+          className="w-full justify-start mt-auto text-gray-600 absolute bottom-4"
+          onClick={handleLogout}
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+          Logout
+        </Button>
+      ) : (
+        <Button
+          variant="ghost"
+          className="w-full justify-start mt-auto text-gray-600 absolute bottom-4"
+          onClick={handleLogin}
+        >
+          <LogIn className="mr-2 h-4 w-4" />
+          Login
+        </Button>
+      )}
     </div>
   )
 }

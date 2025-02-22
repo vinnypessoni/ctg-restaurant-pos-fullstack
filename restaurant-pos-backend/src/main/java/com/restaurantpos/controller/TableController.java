@@ -2,7 +2,6 @@ package com.restaurantpos.controller;
 
 import com.restaurantpos.model.Table;
 import com.restaurantpos.repository.TableRepository;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tables")
-@CrossOrigin(origins = "*")
-@Tag(name = "Table", description = "Table Item management APIs")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TableController {
 
     private static final Logger logger = LoggerFactory.getLogger(TableController.class);
@@ -23,22 +21,22 @@ public class TableController {
     private TableRepository tableRepository;
 
     @GetMapping
-    public ResponseEntity<List<Table>> getAllTables() {
-        logger.info("Fetching all tables");
+    public ResponseEntity<?> getAllTables() {
         try {
+            logger.info("Fetching all tables");
             List<Table> tables = tableRepository.findAll();
             logger.info("Found {} tables", tables.size());
             return ResponseEntity.ok(tables);
         } catch (Exception e) {
             logger.error("Error fetching tables", e);
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body("An error occurred while fetching tables: " + e.getMessage());
         }
     }
 
     @GetMapping("/{tableNumber}")
-    public ResponseEntity<Table> getTableByNumber(@PathVariable int tableNumber) {
-        logger.info("Fetching table with number: {}", tableNumber);
+    public ResponseEntity<?> getTableByNumber(@PathVariable int tableNumber) {
         try {
+            logger.info("Fetching table with number: {}", tableNumber);
             return tableRepository.findByTableNumber(tableNumber)
                     .map(table -> {
                         logger.info("Found table: {}", table);
@@ -49,21 +47,21 @@ public class TableController {
                         return ResponseEntity.notFound().build();
                     });
         } catch (Exception e) {
-            logger.error("Error fetching table {}", tableNumber, e);
-            return ResponseEntity.internalServerError().build();
+            logger.error("Error fetching table with number: {}", tableNumber, e);
+            return ResponseEntity.internalServerError().body("An error occurred while fetching the table: " + e.getMessage());
         }
     }
 
     @PutMapping("/{tableNumber}")
-    public ResponseEntity<Table> updateTable(@PathVariable int tableNumber, @RequestBody Table tableDetails) {
-        logger.info("Updating table with number: {}", tableNumber);
+    public ResponseEntity<?> updateTable(@PathVariable int tableNumber, @RequestBody Table tableDetails) {
         try {
+            logger.info("Updating table with number: {}", tableNumber);
             return tableRepository.findByTableNumber(tableNumber)
                     .map(table -> {
                         table.setStatus(tableDetails.getStatus());
                         table.setCustomerName(tableDetails.getCustomerName());
                         Table updatedTable = tableRepository.save(table);
-                        logger.info("Updated table: " + table.toString());
+                        logger.info("Updated table: {}", updatedTable);
                         return ResponseEntity.ok(updatedTable);
                     })
                     .orElseGet(() -> {
@@ -71,8 +69,8 @@ public class TableController {
                         return ResponseEntity.notFound().build();
                     });
         } catch (Exception e) {
-            logger.error("Error updating table {}", tableNumber, e);
-            return ResponseEntity.internalServerError().build();
+            logger.error("Error updating table with number: {}", tableNumber, e);
+            return ResponseEntity.internalServerError().body("An error occurred while updating the table: " + e.getMessage());
         }
     }
 }

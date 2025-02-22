@@ -7,7 +7,7 @@ import { FoodGrid } from "@/components/food-grid"
 import { Cart } from "@/components/cart"
 import { Footer } from "@/components/footer"
 import { DiningModeSelector } from "@/components/dining-mode"
-import type { CartItemType, FoodItem, DiningMode } from "@/types"
+import type { CartItemType, FoodItem, DiningMode, OrderType } from "@/types"
 
 export default function POSPage() {
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -17,8 +17,8 @@ export default function POSPage() {
   const [foodItems, setFoodItems] = useState<FoodItem[]>([])
   const [filteredItems, setFilteredItems] = useState<FoodItem[]>([])
   const [tableNumber, setTableNumber] = useState(4) // Assuming table 4 as default
-  const [orders, setOrders] = useState([])
-  const [filteredOrders, setFilteredOrders] = useState([])
+  const [orders, setOrders] = useState<OrderType[]>([])
+  const [filteredOrders, setFilteredOrders] = useState<OrderType[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -35,6 +35,7 @@ export default function POSPage() {
         setFilteredItems(data)
       } catch (error) {
         console.error("Error fetching food items:", error)
+        setError((error as Error).message)
       }
     }
 
@@ -88,28 +89,28 @@ export default function POSPage() {
     setSearchTerm(term)
   }
 
-  const fetchOrders = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`)
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || "Failed to fetch orders")
-      }
-      const data = await response.json()
-      setOrders(data)
-      setFilteredOrders(data)
-    } catch (error) {
-      console.error("Error fetching orders:", error)
-      setError(error.message || "An error occurred while fetching orders")
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`)
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.message || "Failed to fetch orders")
+        }
+        const data = await response.json()
+        setOrders(data)
+        setFilteredOrders(data)
+      } catch (error) {
+        console.error("Error fetching orders:", error)
+        setError((error as Error).message || "An error occurred while fetching orders")
+      } finally {
+        setLoading(false)
+      }
+    }
+
     fetchOrders()
-  }, [fetchOrders])
+  }, [])
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
@@ -131,4 +132,3 @@ export default function POSPage() {
     </div>
   )
 }
-

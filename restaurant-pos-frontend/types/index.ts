@@ -46,3 +46,11 @@ export interface FoodItem {
   discount?: number
 }
 
+export type OrderType = {
+  id: number
+  items: CartItemType[]
+  total: number
+  paymentMethod: string
+  diningMode: DiningMode
+  tableNumber?: number
+}

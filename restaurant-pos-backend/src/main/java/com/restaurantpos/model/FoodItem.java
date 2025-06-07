@@ -99,5 +99,38 @@ public class FoodItem {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("FoodItem {\n");
+        sb.append("  id: ").append(id).append(",\n");
+        sb.append("  title: \"").append(title).append("\",\n");
+        sb.append("  price: $").append(String.format("%.2f", price)).append(",\n");
+
+        if (discount != null && discount > 0) {
+            sb.append("  discount: ").append(discount).append("%,\n");
+        } else {
+            sb.append("  discount: none,\n");
+        }
+
+        sb.append("  type: \"").append(type).append("\",\n");
+        sb.append("  category: \"").append(category).append("\",\n");
+        sb.append("  quantity: ").append(quantity).append(",\n");
+
+        // Truncate image URL if it's too long
+        if (image != null) {
+            if (image.length() > 50) {
+                sb.append("  image: \"").append(image.substring(0, 47)).append("...\"\n");
+            } else {
+                sb.append("  image: \"").append(image).append("\"\n");
+            }
+        } else {
+            sb.append("  image: null\n");
+        }
+
+        sb.append("}");
+        return sb.toString();
+    }
 }
 
